@@ -10,9 +10,10 @@ while (my $line = <>) {
     chomp $line;
     # Ignore comments and empty lines
     next if $line =~ /^#/ || $line =~ /^\s*$/;
-    if ($line =~ /(\d)\s(\d)\s(\d)\s(\d)/) {
+    my $n_p = q([-+]?(?:\d+(\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?);
+    if ($line =~ /($n_p)\s($n_p)\s($n_p)\s($n_p)/) {
         # Parse quaternion numbers
-        my @quaternion = ($1, $2, $3, $4);
+        my @quaternion = ($1, $3, $5, $7);
         # Push quaternion to stack
         push @stack, \@quaternion;
     } else {
