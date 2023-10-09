@@ -10,9 +10,11 @@ while (my $line = <>) {
     chomp $line;
     # Ignore comments and empty lines
     next if $line =~ /^#/ || $line =~ /^\s*$/;
+    # Real number regex pattarn
     my $n_p = q([-+]?(?:\d+(\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?);
+    # Match quaternion pattern
     if ($line =~ /($n_p)\s($n_p)\s($n_p)\s($n_p)/) {
-        # Parse quaternion numbers
+        # Parse quaternion components
         my @quaternion = ($1, $3, $5, $7);
         # Push quaternion to stack
         push @stack, \@quaternion;
@@ -51,4 +53,3 @@ sub multiply {
     );
     push @stack, \@result;
 }
-
