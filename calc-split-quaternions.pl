@@ -5,7 +5,9 @@ use warnings;
 # Define the quaternion stack
 my @stack;
 my $svn_info = `svn info`;
-
+my ($revision, $date, $author) = 
+    $svn_info =~ /Revision:\s(\d+)\s.*?Date:\s(.*?)\s.*?Author:\s(.*?)\s/ms;
+my $program_name = "calc-split-quaternions";
 # Read input from file or STDIN
 while (my $line = <>) {
     chomp $line;
@@ -36,7 +38,10 @@ if (scalar @stack != 1) {
 }
 
 # Output the result
-print($svn_info);
+
+if (defined $revision && defined $date && defined $author) {
+    print "# Id: $program_name $revision $date $author\n";
+}
 print "#@ 1 i J K\n";
 print join(" ", @{$stack[0]}) . "\n";
 
