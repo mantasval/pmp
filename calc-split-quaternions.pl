@@ -4,6 +4,7 @@ use warnings;
 
 # Define the quaternion stack
 my @stack;
+my $svn_info = `svn info`;
 
 # Read input from file or STDIN
 while (my $line = <>) {
@@ -35,6 +36,8 @@ if (scalar @stack != 1) {
 }
 
 # Output the result
+print($svn_info);
+print "#@ 1 i J K\n";
 print join(" ", @{$stack[0]}) . "\n";
 
 sub multiply {
