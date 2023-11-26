@@ -9,12 +9,12 @@ INPUT_IMAGES := $(wildcard $(INPUT_DIR)/*.pnm)
 # Pavertimo taisyklė
 $(OUTPUT_DIR)/%.ps: $(INPUT_DIR)/%.pnm
     @mkdir -p $(OUTPUT_DIR)
-    @echo "Converting $< to $@"
-    @your-conversion-command $< -o $@
+    @echo "Copying $< to $@"
+    @cp $< $@
 
 # Taisyklė dėl visų failų konvertavimo
 all: $(patsubst $(INPUT_DIR)/%.pnm, $(OUTPUT_DIR)/%.ps, $(INPUT_IMAGES))
-    @echo "All files converted"
+    @echo "All files copied"
 
 # Sukurimo taisyklė summary failui
 $(SUMMARY_FILE): $(OUTPUT_DIR)
@@ -32,3 +32,4 @@ nothing:
 
 # Nustatyti numatytą veiksmą
 .DEFAULT_GOAL := nothing
+
