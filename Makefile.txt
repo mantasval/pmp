@@ -1,0 +1,34 @@
+# Kintamieji
+INPUT_DIR := inputs
+OUTPUT_DIR := outputs/images
+SUMMARY_FILE := outputs/summary.tbz2
+
+# Visi paveikslėlių failai input direktorijoje
+INPUT_IMAGES := $(wildcard $(INPUT_DIR)/*.pnm)
+
+# Pavertimo taisyklė
+$(OUTPUT_DIR)/%.ps: $(INPUT_DIR)/%.pnm
+    @mkdir -p $(OUTPUT_DIR)
+    @echo "Converting $< to $@"
+    @your-conversion-command $< -o $@
+
+# Taisyklė dėl visų failų konvertavimo
+all: $(patsubst $(INPUT_DIR)/%.pnm, $(OUTPUT_DIR)/%.ps, $(INPUT_IMAGES))
+    @echo "All files converted"
+
+# Sukurimo taisyklė summary failui
+$(SUMMARY_FILE): $(OUTPUT_DIR)
+    @echo "Creating summary archive"
+    @tar -cjf $(SUMMARY_FILE) $(OUTPUT_DIR)
+    @echo "Summary file created: $(SUMMARY_FILE)"
+
+# "make" komandos
+.PHONY: all
+all: $(SUMMARY_FILE)
+
+# Jei nėra atnaujintų failų
+nothing:
+    @echo "Nothing to be done for all"
+
+# Nustatyti numatytą veiksmą
+.DEFAULT_GOAL := nothing
